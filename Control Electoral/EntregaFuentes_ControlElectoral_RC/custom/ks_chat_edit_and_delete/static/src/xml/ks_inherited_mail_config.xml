@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-extend ="mail.MessageList">
+        <t t-jquery="p.o_mail_info" t-operation="append">
+            <span class="ks_edit_icon">
+             <i t-if="!message.isSystemNotification() and !message.needsModeration() and !message.shouldRedirectToAuthor() and message.ks_hasBody() and message.ks_edit_time_elapsed()"
+                    class="fa o_thread_icon o_thread_edit fa-pencil fa-lg"
+                    t-att-data-message-id="message.getID()" title="Edit" role="img" aria-label="Edit"/>
+            </span>
+            <span class="ks_delete_icon">
+                <i t-if="!message.isSystemNotification() and message.getType() !== 'notification' and !message.needsModeration() and !message.ks_shouldRedirectToAuthor() and message.ks_edit_time_elapsed_delete()"
+                    class="fa fa-lg fa-trash-o o_thread_icon o_thread_message_delete"
+                    t-att-data-message-id="message.getID()" title="Delete" role="img" aria-label="Delete"/>
+            </span>
+            <span class="ks_check_edited">
+                <t t-if="message.ks_getEditMessage() and !message.isSystemNotification() and !message.needsModeration() and !message.shouldRedirectToAuthor() and message.ks_hasBody()">
+                    <span>(Edited)</span>
+                </t>
+            </span>
+        </t>
+        <t t-jquery=".o_thread_message_sidebar" t-operation="after">
+            <span class="ks_edit_icon">
+            <i t-if="!displayAuthorMessages[message.getID()] and message.getType() !== 'notification' and !message.isSystemNotification() and !message.needsModeration() and !message.shouldRedirectToAuthor() and message.ks_hasBody() and message.ks_edit_time_elapsed()"
+                    class="fa o_thread_icon o_thread_edit fa-pencil fa-xs"
+                    t-att-data-message-id="message.getID()" title="Edit" role="img" aria-label="Edit"/>
+            </span>
+            <span class="ks_delete_icon">
+                <i t-if="!displayAuthorMessages[message.getID()] and message.getType() !== 'notification' and !message.isSystemNotification() and !message.needsModeration() and !message.ks_shouldRedirectToAuthor() and message.ks_edit_time_elapsed_delete()"
+                    class="fa fa-trash-o o_thread_icon o_thread_message_delete fa-xs"
+                    t-att-data-message-id="message.getID()" title="Delete" role="img" aria-label="Delete"/>
+            </span>
+            <span class="ks_check_edited">
+                <t t-if="message.ks_getEditMessage() and !displayAuthorMessages[message.getID()] and message.getType() !== 'notification' and !message.isSystemNotification() and !message.needsModeration() and !message.shouldRedirectToAuthor() and message.ks_hasBody()">
+                    <span>(Edited)</span>
+                </t>
+            </span>
+        </t>
+    </t>
+
+    <t t-name="mail.Message" t-inherit="mail.Message" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_Message_headerCommands')]" position="after">
+
+            <t t-if="!message.isTemporary and ((message.message_type !== 'notification' and message.originThread and message.originThread.model === 'mail.channel') or !message.isTransient) and message.moderation_status !== 'pending_moderation'">
+                <span class="ks_edit_icon">
+
+                 <i t-if="_renderEdit()"
+                         class="fa o_thread_icon o_thread_edit fa-pencil fa-lg o_Activity_toolButton"
+                         title="Edit" role="img" aria-label="Edit" t-on-click="_onClickEditMsg"/>
+            </span>
+            <span class="ks_delete_icon">
+                <i t-if="_ks_edit_time_elapsed_delete()"
+                        class="fa fa-lg fa-trash-o o_thread_icon o_thread_message_delete o_Activity_toolButton"
+                   title="Delete" role="img" aria-label="Delete" t-on-click="_onClickDeleteMsg"/>
+            </span>
+            <span class="ks_check_edited">
+                <i t-if="_renderCheckEdited()">
+                    <span>(Edited)</span>
+                </i>
+            </span>
+
+            </t>
+
+        </xpath>
+    </t>
+
+    <t t-name="mail.Message" t-inherit="mail.Message" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_Message_sidebarCommands')]" position="after">
+
+            <t t-if="!message.isTemporary and ((message.message_type !== 'notification' and message.originThread and message.originThread.model === 'mail.channel') or !message.isTransient) and message.moderation_status !== 'pending_moderation'">
+                <span class="ks_edit_icon">
+
+                 <i t-if="_renderEdit()"
+                         class="fa o_thread_icon o_thread_edit fa-pencil fa-lg o_Activity_toolButton"
+                         title="Edit" role="img" aria-label="Edit" t-on-click="_onClickEditMsg"/>
+            </span>
+            <span class="ks_delete_icon">
+                <i t-if="_ks_edit_time_elapsed_delete()"
+                        class="fa fa-lg fa-trash-o o_thread_icon o_thread_message_delete o_Activity_toolButton"
+                   title="Delete" role="img" aria-label="Delete" t-on-click="_onClickDeleteMsg"/>
+            </span>
+            <span class="ks_check_edited">
+                <i t-if="_renderCheckEdited()">
+                    <span>(Edited)</span>
+                </i>
+            </span>
+
+            </t>
+
+        </xpath>
+    </t>
+
+    <div t-name="mail.legacy.Composer.emojis2" class="o_mail_emoji_container">
+        <div class="o_EmojisPopover">
+            <t t-foreach="emojis" t-as="emoji" t-key="emoji.unicode">
+                <span class="o_EmojisPopover_emoji"  t-att-title="emoji.description" t-att-data-source="emoji.sources[0]" t-att-data-unicode="emoji.unicode">
+                    <t t-esc="emoji.unicode"/>
+                </span>
+            </t>
+        </div>
+    </div>
+
+</templates>

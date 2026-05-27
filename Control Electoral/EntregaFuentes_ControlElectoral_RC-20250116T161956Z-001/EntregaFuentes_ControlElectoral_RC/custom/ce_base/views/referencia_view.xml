@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_referencia_tree" model="ir.ui.view">
+        <field name="name">referencia.tree</field>
+        <field name="model">ce_base.referencia</field>
+        <field name="arch" type="xml">
+            <tree string="REFERIDOS">
+                <field name="cedula"/>
+                <field name="nombres"/>
+                <field name="celular"/>
+                <field name="email"/>
+                <field name="nivel"/>
+                <field name="total_coordinadores" optional="hide"/>
+                <field name="total_delegados" optional="hide"/>
+                <field name="distrito" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_referencia_form" model="ir.ui.view">
+        <field name="name">referencia.form</field>
+        <field name="model">ce_base.referencia</field>
+        <field name="arch" type="xml">
+            <form string="REFERIDOS">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="cedula" string="Identificacion" class="oe_edit_only"/>
+                        <h1>
+                            <field name="cedula" placeholder="Identificacion del Delegado"/>
+                        </h1>
+                    </div>
+                        <group>
+                            <label for="nombres" string="Nombre Completo" class="oe_edit_only"/>
+                            <field name="nombres" placeholder="Nombre Completo" attrs="{'readonly':True}" force_save="1"/>
+                            <group>
+                                <field name="celular" widget="phone"/>
+                                <field name="email" widget="email"/>
+                                <field name="genero" attrs="{'readonly':True}" force_save="1" widget="radio"/>
+                                <field name="total_coordinadores"/>
+                            </group>
+                            <group>
+                                <field name="operadora"/>
+                                <field name="nivel"/>
+                                <field name="referido_id" string="Referido por:"/>
+                                <field name="total_delegados"/>
+                                <field name="distrito"/>
+                            </group>
+                        </group>  
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_referencia_graph" model="ir.ui.view">
+        <field name="model">ce_base.referencia</field>
+        <field name="groups_id" eval="[(4, ref('ce_base.group_electoral_direccion'))]"/>
+        <field name="arch" type="xml">
+            <graph string="Referencia">
+                <field name="referido_id"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_referencia_pivot" model="ir.ui.view">
+        <field name="model">ce_base.referencia</field>
+        <field name="groups_id" eval="[(5, ref('ce_base.group_electoral_direccion'))]"/>
+        <field name="arch" type="xml">
+            <pivot string="Referencia">
+                <field name="referido_id"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_referencia">
+        <field name="name">REFERIDOS</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.referencia</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Referencia.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_capacitacion_tree" model="ir.ui.view">
+        <field name="name">capacitacion.tree</field>
+        <field name="model">ce_capacitacion.capacitacion</field>
+        <field name="arch" type="xml">
+            <tree string="Capacitaciones">
+                <field name="nombre"/>
+                <field name="fecha"/>
+                <field name="lugar"/>
+                <field name="capacitador_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_capacitacion_form" model="ir.ui.view">
+        <field name="name">capacitacion.form</field>
+        <field name="model">ce_capacitacion.capacitacion</field>
+        <field name="arch" type="xml">
+            <form string="Capacitaciones">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="capacitador_id"/>
+                        </group>
+                        <group>
+                            <field name="fecha" widget="date"/>
+                            <field name="lugar"/>
+                            <field name="cantidad"/>
+                        </group>
+                        <field name="delegados_ids" options="{'no_quick_create':True,'no_create_edit':True,}"/>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>       
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_capacitacion">
+        <field name="name">Capacitaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_capacitacion.capacitacion</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ce_capacitacion.view_capacitacion_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Capacitacion.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- resumen -->
+    
+    <record id="view_resumen_capacitados_tree" model="ir.ui.view">
+        <field name="name">resumen_capacitados.tree</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <tree string="Delegados Capacitados">
+                <field name="nombres"/>
+                <field name="capacitacion_ids" />
+            </tree>
+        </field>
+    </record>
+    
+    
+    <record model="ir.actions.act_window" id="action_resumen_capacitados">
+        <field name="name">Capacitaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.delegado</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('capacitacion_ids','!=',False)]</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_resumen_capacitados_tree')})]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem name="Call Center" sequence ="6" id="main_menu_call_center" parent="ce_base.menu_electoral" groups="ce_base.group_electoral_manager,group_electoral_call_center_user"/>
+    <menuitem name="Delegados Call Center" id="menu_call_center_delegados" parent="main_menu_call_center" groups="ce_base.group_electoral_manager,group_electoral_call_center_user" action="action_delegado_call_center"/>
+    <menuitem name="Resumen Grafico Call Center" id="menu_call_center_resumen" parent="main_menu_call_center" groups="ce_base.group_electoral_manager,group_electoral_call_center_user" action="action_delegado_call_center_resumen"/>
+    <!-- <menuitem name="Delegados Call Center TODOS" id="menu_call_center_delegados_administrador" parent="main_menu_call_center" groups="ce_base.group_electoral_manager,ce_base.group_electoral_supervisor" action="action_delegado_administrador_call_center"/> -->
+    <menuitem name="Resumen de llamadas" id="menu_call_center_resumen_llamadas" parent="main_menu_call_center" groups="ce_base.group_electoral_manager,ce_base.group_electoral_supervisor" action="action_llamada"/>
+</odoo>

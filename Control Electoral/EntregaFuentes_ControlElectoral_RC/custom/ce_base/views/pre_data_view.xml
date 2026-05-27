@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pre_data_tree" model="ir.ui.view">
+        <field name="name">pre_data.tree</field>
+        <field name="model">ce_base.pre_data</field>
+        <field name="arch" type="xml">
+            <tree string="PRE DATA">
+                <field name="cedula"/>
+                <field name="nom_padron"/>
+                <field name="nom_recinto"/>
+                <field name="junta"/>
+                <field name="sex_padron"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="view_provincia_form" model="ir.ui.view">
+        <field name="name">provincia.form</field>
+        <field name="model">ce_base.provincia</field>
+        <field name="arch" type="xml">
+            <form string="Provincia">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="nom_prov" string="Nombre" class="oe_edit_only"/>
+                        <h1>
+                            <field name="nom_prov" placeholder="Nombre de la Provincia"/>
+                        </h1>
+                        <group>
+                        <group><field name="cod_prov"/></group>
+                        </group>
+                        
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+
+    <record model="ir.actions.act_window" id="action_pre_data">
+        <field name="name">PRE DATA</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.pre_data</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="view_asignacion_directa_recinto_wizard_form" model="ir.ui.view">
+        <field name="name">ce_base.asignacion_directa_recinto.wizard.form</field>
+        <field name="model">ce_base.asignacion_directa_recinto.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirmar informacion">
+                    <group>
+                        <group>
+                            <field name="delegado_id" attrs="{'invisible':True}"/>
+                            <field name="celular"/>
+                            <field name="cedula"/>
+                            <field name="nombres"/>
+                            <field name="operadora"/>
+                            <field name="email" /> 
+
+                        </group>
+                        <group>
+                            <field name="tipo_delegado"/>
+                            <field name="cod_provincia" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_canton" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_parroquia" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_zona" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_recinto" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="coor_recinto_id" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </group>
+                        <separator string="Nuevo Recinto a Coordinar" colspan="4"/>
+                        <field name="nuevo_coor_recinto_id"/>
+                        <footer>
+                            <button string="Asignar" name="asignar" type="object" class="oe_highlight"/>
+                            <button string="Cancelar" special="cancel" class="btn btn-secondary"/>
+                        </footer>
+                    </group>
+            </form>
+        </field>
+    </record>
+
+
+<record model="ir.actions.act_window" id="action_asignacion_directa_recinto_wizard">
+    <field name="name">Asignacion Directa Recinto</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">ce_base.asignacion_directa_recinto.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="view_asignacion_directa_recinto_wizard_form"/>
+    <field name="target">new</field>
+</record>
+</odoo>

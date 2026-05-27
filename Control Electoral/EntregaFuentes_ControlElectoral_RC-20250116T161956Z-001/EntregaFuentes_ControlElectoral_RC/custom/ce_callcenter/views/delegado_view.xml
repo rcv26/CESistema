@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_delegado_filter" model="ir.ui.view">
+        <field name="name">delegado.filter</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="Delegado">
+                <field name="cedula"/>
+                <field name="nombres"/>
+                <field name="celular"/>
+                <separator/>
+                <filter string="Hombre" name="genero" domain="[('genero','=','M')]"/>
+                <filter string="Mujer" name="genero" domain="[('genero','=','F')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_call_center_delegado_tree" model="ir.ui.view">
+        <field name="name">delegado.tree</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <tree string="DELEGADOS CALL CENTER">
+                <field name="cedula"/>
+                <field name="nombres"/>
+                <field name="genero" widget="radio"/>
+                <field name="referencia1"/>
+                <field name="tipo_ingreso"/>
+                <field name="estado"/>
+                <field name="tipo_delegado"/>
+                <field name="juntas_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_call_center_delegado_form" model="ir.ui.view">
+        <field name="name">delegado.form</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <form string="DELEGADOS CALL CENTER">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="call_delegado" type="object" string="Realizar llamada" class="oe_stat_button" icon="fa-phone-square"/>
+                        <button name="action_juntas" type="object" class="oe_stat_button" icon="fa-wpforms">
+                            <field string="Juntas" name="juntas_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="cedula" string="Identificacion" class="oe_edit_only"/>
+                        <h1>
+                            <field name="cedula" placeholder="Identificacion del Delegado" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <label for="nombres" string="Nombre Completo" class="oe_edit_only"/>
+                        <field name="nombres" attrs="{'readonly':True}" force_save="1" placeholder="Nombres del Delegado"/>
+                        <group>
+                            <field name="cod_provincia" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_canton" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_parroquia" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_zona" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_recinto" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="genero" attrs="{'readonly':True}" force_save="1" widget="radio"/>
+                            <field name="numero_junta" attrs="{'readonly':True}" force_save="1" widget="radio"/>
+                            <field name="tipo_delegado" invisible='1'/>
+                        </group>
+                        <group>
+                            <field name="celular" widget="phone"/>
+                            <field name="operadora"/>
+                            <field name="email" widget="email"/>
+                            <field name="referencia1" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia2" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia3" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia4" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </group>
+                        <field name="juntas_ids" nolabel="1" mode="tree,form">
+                            <tree string="Delegado">
+                                <field name="cod_provincia" string="Provincia"/>
+                                <field name="cod_canton" string="Canton" />
+                                <field name="cod_parroquia" string="Parroquia" />
+                                <field name="cod_zona" string="Zona" />
+                                <field name="cod_recinto" string="Recinto" />
+                                <field name="genero" string="Genero"/>
+                                <field name="numero_junta" string="Junta"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="cod_provincia" string="Provincia"/>
+                                        <field name="cod_canton" string="Canton"/>
+                                        <field name="cod_parroquia" string="Parroquia"/>
+                                        <field name="cod_zona" string="Zona"/>
+                                    </group>
+                                    <group>
+                                        <field name="cod_recinto" string="Recinto"/>
+                                        <field name="genero" string="Genero"/>
+                                        <field name="numero_junta" string="Junta"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delegado_call_form" model="ir.ui.view">
+        <field name="name">Delegado Form callcenter</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="inherit_id" ref="ce_base.view_delegado_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_llamadas" class="oe_stat_button" icon="fa-th-list" type="object" title="Lab Requests">
+                    <field string="Llamadas" name="call_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_delegado_cordinador_call_form" model="ir.ui.view">
+        <field name="name">Delegado Form callcenter</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="inherit_id" ref="ce_base.view_delegado_coordinador_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_llamadas" class="oe_stat_button" icon="fa-th-list" type="object" title="Lab Requests">
+                    <field string="Llamadas" name="call_count" widget="statinfo"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_delegado_call_center">
+        <field name="name">DELEGADOS CALL CENTER</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.delegado</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_delegado_filter"/>
+        <field name="domain">[('estado','=','i')]</field>
+
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_call_center_delegado_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_call_center_delegado_form')})]"/>
+    </record>
+
+<!--    *****************************************-->
+    <record id="view_delegado_administrador_filter" model="ir.ui.view">
+        <field name="name">delegado.filter</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="Delegado">
+                <field name="cedula"/>
+                <field name="nombres"/>
+                <field name="celular"/>
+                <separator/>
+                <filter string="Hombre" name="genero" domain="[('genero','=','M')]"/>
+                <filter string="Mujer" name="genero" domain="[('genero','=','F')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_call_center_delegado_administrador_tree" model="ir.ui.view">
+        <field name="name">delegado.tree</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <tree string="DELEGADOS CALL CENTER">
+                <field name="cedula"/>
+                <field name="nombres"/>
+                <field name="genero" widget="radio"/>
+                <field name="referencia1"/>
+                <field name="tipo_ingreso"/>
+                <field name="estado"/>
+                <field name="tipo_delegado"/>
+                <field name="juntas_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_call_center_delegado_administrador_form" model="ir.ui.view">
+        <field name="name">delegado.form</field>
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <form string="DELEGADOS CALL CENTER">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="call_delegado" type="object" string="Realizar llamada" class="oe_stat_button" icon="fa-phone-square"/>
+                        <button name="action_juntas" type="object" class="oe_stat_button" icon="fa-wpforms">
+                            <field string="Juntas" name="juntas_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="cedula" string="Identificacion" class="oe_edit_only"/>
+                        <h1>
+                            <field name="cedula" placeholder="Identificacion del Delegado" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <label for="nombres" string="Nombre Completo" class="oe_edit_only"/>
+                        <field name="nombres" attrs="{'readonly':True}" force_save="1" placeholder="Nombres del Delegado"/>
+                        <group>
+                            <field name="cod_provincia" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_canton" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_parroquia" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_zona" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="cod_recinto" attrs="{'readonly':True}" force_save="1" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="genero" attrs="{'readonly':True}" force_save="1" widget="radio"/>
+                            <field name="numero_junta" attrs="{'readonly':True}" force_save="1" widget="radio"/>
+                            <field name="tipo_delegado" invisible='1'/>
+                            <field name="estado" />
+                        </group>
+                        <group>
+                            <field name="celular" widget="phone"/>
+                            <field name="operadora"/>
+                            <field name="email" widget="email"/>
+                            <field name="referencia1" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia2" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia3" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                            <field name="referencia4" force_save="1" attrs="{'readonly':True}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </group>
+                        <field name="juntas_ids" nolabel="1" mode="tree,form">
+                            <tree string="Delegado">
+                                <field name="cod_provincia" string="Provincia"/>
+                                <field name="cod_canton" string="Canton" />
+                                <field name="cod_parroquia" string="Parroquia" />
+                                <field name="cod_zona" string="Zona" />
+                                <field name="cod_recinto" string="Recinto" />
+                                <field name="genero" string="Genero"/>
+                                <field name="numero_junta" string="Junta"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="cod_provincia" string="Provincia"/>
+                                        <field name="cod_canton" string="Canton"/>
+                                        <field name="cod_parroquia" string="Parroquia"/>
+                                        <field name="cod_zona" string="Zona"/>
+                                    </group>
+                                    <group>
+                                        <field name="cod_recinto" string="Recinto"/>
+                                        <field name="genero" string="Genero"/>
+                                        <field name="numero_junta" string="Junta"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_delegado_administrador_call_center">
+        <field name="name">DELEGADOS CALL CENTER</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.delegado</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_delegado_administrador_filter"/>
+<!--        <field name="domain">[('estado','=','i')]</field>-->
+
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_call_center_delegado_administrador_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_call_center_delegado_administrador_form')})]"/>
+    </record>
+
+
+    <!-- resumen -->
+    <record id="view_callcenter_delegado_graph" model="ir.ui.view">
+        <field name="model">ce_base.delegado</field>
+        <field name="arch" type="xml">
+            <graph string="DELEGADOS CALL CENTER" type="bar" orientation="horizontal">
+                <field name="tipo_ingreso"/>
+                <field name="estado" operator="+"/>
+<!--                <field name="genero" operator="+"/>-->
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_delegado_pivot" model="ir.ui.view">
+        <field name="model">ce_base.delegado</field>
+        <field name="groups_id" eval="[(5, ref('ce_base.group_electoral_supervisor'))]"/>
+        <field name="arch" type="xml">
+            <pivot string="DELEGADOS CALL CENTER">
+                <field name="tipo_ingreso"/>
+                <field name="estado" operator="+"/>
+            </pivot>
+        </field>
+    </record>
+    
+    
+    <record model="ir.actions.act_window" id="action_delegado_call_center_resumen">
+        <field name="name">Delegado</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.delegado</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="ce_callcenter.view_callcenter_delegado_graph"/>
+    </record>
+
+
+
+
+
+</odoo>

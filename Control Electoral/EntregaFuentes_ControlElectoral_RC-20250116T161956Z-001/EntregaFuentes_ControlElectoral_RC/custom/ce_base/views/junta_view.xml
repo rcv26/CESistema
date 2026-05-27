@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_junta_tree" model="ir.ui.view">
+        <field name="name">junta.tree</field>
+        <field name="model">ce_base.junta</field>
+        <field name="arch" type="xml">
+            <tree string="JUNTAS">
+                <field name="cod_provincia" string="Provincia"/>
+                <field name="cod_canton" string="Canton"/>
+                <field name="cod_parroquia" string="Parroquia"/>
+                <field name="cod_zona" string="Zona"/>
+                <field name="cod_recinto" string="Recinto"/>
+                <field name="genero" string="Genero"/>
+                <field name="numero_junta" string="Junta"/>
+                <field name="delegado_id" string="Delegado"/>
+                <field name="tiene_delegado" optional="hide"/>
+                <field name="cedula" string="Cedula Delegado" optional="hide"/>
+                <field name="tipo_ingreso_delegado" string="Tipo de Ingreso Delegado" optional="hide"/>
+                <field name="estado_delegado" string="Estado Delegado" optional="hide"/>
+                <field name="distrito" string="Distrito" optional="hide"/>
+
+            </tree>
+        </field>
+    </record>
+    <!-- <record id="view_junta_form" model="ir.ui.view">
+        <field name="name">junta.form</field>
+        <field name="model">ce_base.junta</field>
+        <field name="arch" type="xml">
+            <form string="junta">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="nom_prov" string="Nombre" class="oe_edit_only"/>
+                        <h1>
+                            <field name="nom_prov" placeholder="Nombre de la junta"/>
+                        </h1>
+                        <group>
+                        <group><field name="cod_junta"/></group>
+                        </group>
+                        
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record> -->
+
+    <record id="view_junta_filter" model="ir.ui.view">
+        <field name="name">junta.filter</field>
+        <field name="model">ce_base.junta</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="Juntas">
+                <field name="cod_recinto"/>
+              </search>
+        </field>
+    </record>
+
+    <record id="view_junta_graph" model="ir.ui.view">
+        <field name="model">ce_base.junta</field>
+        <field name="arch" type="xml">
+            <graph>
+                <field name="genero"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_junta_pivot" model="ir.ui.view">
+        <field name="model">ce_base.junta</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="genero"/>
+                <field name="numero_junta"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_junta">
+        <field name="name">JUNTAS</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ce_base.junta</field>
+        <field name="view_mode">tree,pivot,graph</field>
+        <field name="search_view_id" ref="view_junta_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record Found
+            </p>
+            <p>
+                Click to add a Junta.
+            </p>
+        </field>
+    </record>
+
+</odoo>
