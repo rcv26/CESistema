@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-
-access_capacitacion_manager,capacitacion,model_ce_capacitacion_capacitacion,ce_base.group_electoral_manager,1,1,1,1
-access_capacitador_manager,capacitador,model_ce_capacitacion_capacitador,ce_base.group_electoral_manager,1,1,1,1
-
-access_capacitacion,capacitacion,model_ce_capacitacion_capacitacion,group_electoral_capacitacion_user,1,1,1,0
-access_capacitador,capacitador,model_ce_capacitacion_capacitador,group_electoral_capacitacion_user,1,1,1,0
